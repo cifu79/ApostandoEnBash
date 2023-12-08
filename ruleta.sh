@@ -128,19 +128,38 @@ function inverseLabrouchere(){
                 my_sequence=(${my_sequence[@]})
 
                 echo -e "${yellowColour}[+]${endColour}${grayColour} Nuestra nueva secuencia es${endColour}${greenColour} [${my_sequence[@]}] ${endColour}"
-                if [ "${#my_sequence[@]}" -ne 1 ];then
+                if [ "${#my_sequence[@]}" -ne 1 ] && [ "${#my_sequence[@]}" -ne 0 ];then
                     bet=$((${my_sequence[0]}+${my_sequence[-1]}))
                 elif [ "${#my_sequence[@]}" -eq 1 ];then
                     bet=${my_sequence[0]}
+                else
+                    echo -e "${redColour}[!] Hemos perdido nuestra secuencia${endColour}"
+                    my_sequence=(1 2 3 4)
+                    echo -e "${yellowColour}[+]${endColour}${grayColour} Restablecemos la secuencia a${endColour} ${greenColour}[${my_sequence[@]}]${endColour}"
                 fi
 
             elif [ "$random_number" -eq 0 ];then
                 echo -e "${redColour}[!] Ha salido el cero, pierdes${endColour}"
             else
                 echo -e "${redColour}[!] El numero es impar, pierdes${endColour}"
+
+                unset my_sequence[0]
+                unset my_sequence[-1] 2>/dev/null
+
+                my_sequence=(${my_sequence[@]})
+
+                echo -e "${yellowColour}[+]${endColour}${grayColour} La sequencia se nos queda de la siguiente forma:${endColour}${greenColour} [${my_sequence[@]}]${endColour}"
+
+                if [ "${#my_sequence[@]}" -ne 1 ] && [ "${#my_sequence[@]}" -ne 0 ];then
+                    bet=$((${my_sequence[0]}+${my_sequence[-1]}))
+                elif [ "${#my_sequence[@]}" -eq 1 ];then
+                    bet=${my_sequence[0]}
+                else
+                    echo -e "${redColour}[!] Hemos perdido nuestra secuencia${endColour}"
+                    my_sequence=(1 2 3 4)
+                    echo -e "${yellowColour}[+]${endColour}${grayColour} Restablecemos la secuencia a${endColour} ${greenColour}[${my_sequence[@]}]${endColour}"
+                fi
             fi
-        else
-            echo -e "por el momento nada"
         fi
 
         sleep 2
